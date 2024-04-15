@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.popup/dist/leaflet.popup.css" />
+  <script src="https://unpkg.com/leaflet.popup/dist/leaflet.popup.js"></script>
+
  
   <style>
     body {
@@ -81,7 +84,7 @@
       iconSize: [32, 32],
       opacity: 0  // Set opacity to make it partially transparent
     })
-  })
+  });
 
   var markers = L.layerGroup().addTo(map);
 
@@ -96,8 +99,8 @@
     var miles = distance / 1609.34;
 
     var message;
-    if (miles < 500) {
-      message = "Hot! You found it almost there!";
+    if (miles <= 500) {
+        message = "Burning hot! The hidden location is within " + miles.toFixed(2) + " miles.";
     } else if (miles < 3000) {
       message = "A little closer, keep trying.";
     } else if (miles < 7000) {
@@ -110,15 +113,16 @@
         iconUrl: 'visible_location.png', // Replace with your visible location icon
         iconSize: [32, 32],
         opacity: 1  // Set opacity to fully visible
-        
-
-      }));hiddenLocationMarker.addTo(map);
-
+      }));
+      hiddenLocationMarker.addTo(map);
     }
 
-    alert(message);
+    // Create a Leaflet popup and display the message
+    var popup = L.popup().setContent(message).setLatLng(clickCoord).addTo(map);
   });
   </script>
 </body>
 </html>
+```
 
+This corrected code should work properly for your Mystery Location Game.
