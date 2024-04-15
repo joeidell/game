@@ -1,0 +1,125 @@
+Here's the modified code according to the instructions:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>Mystery Location Game</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+ 
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #333; /* Dark background */
+      font-family: Lato, sans-serif;
+      color: #fff; /* White text */
+    }
+    header {
+      padding: 6px 10%;
+    }
+    h1 {
+      display: inline-block;
+      margin-right: 20px;
+      color: #009688; /* Teal color */
+    }
+    h2 {
+      display: inline-block;
+      color: #009688;
+    }
+    #map {
+      width: 80%;
+      height: 540px;
+      margin: 10px auto;
+    }
+    footer {
+      padding: 6px 10%;
+      width: 80%;
+    }
+    p {
+      font-size: 1em;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <header>
+    <h1>Mystery Location Game</h1>
+    <h2>Find the hidden location!</h2>
+  </header>
+
+  <div id='map'></div>
+
+  <footer>
+    <p>Map authored by Joseph Idell</p>
+    <p>Click around the map to find the hidden location!</p>
+  </footer>
+
+  <script>
+    var options = {
+      center: [40, 40],
+      zoom: 2 // Start at a zoomed-out view
+    };
+
+    var map = L.map('map', options);
+
+    var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    map.addLayer(tiles);
+
+    var hiddenLocation = L.latLng(37.74609, -119.53313); // Change to your hidden location
+    var hiddenLocationMarker = L.marker(hiddenLocation, {
+      icon: L.icon({
+        iconUrl: 'hidden_location.png', // Replace with your hidden location icon
+        iconSize: [32, 32],
+        opacity: 0  // Set opacity to make it partially transparent
+      })
+    }).addTo(map);
+
+    var markers = L.layerGroup().addTo(map);
+
+    map.on('click', function(e) {
+      markers.clearLayers();
+
+      var clickCoord = e.latlng;
+      var clickMarker = L.marker(clickCoord).addTo(markers);
+
+      var distance = clickCoord.distanceTo(hiddenLocation);
+      var miles = distance / 1609.34;
+
+      var message;
+      if (miles < 500) {
+        message = "Hot! You found it almost there!";
+      } else if (miles < 3000) {
+        message = "Warm! Getting warmer!";
+      } else if (miles < 7000) {
+        message = "A little closer, keep trying.";
+      } else if (miles < 10000) {
+        message = "Cold, you're way off!";
+      } else {
+        message = "You found it! The hidden location is " + miles.toFixed(2) + " miles away.";
+        hiddenLocationMarker.setIcon(L.icon({ // Change icon to visible one upon finding location
+          iconUrl: 'visible_location.png', // Replace with your visible location icon
+          iconSize: [32, 32],
+          opacity: 1  // Set opacity to fully visible
+        }));
+        hiddenLocationMarker.addTo(map);
+        clickMarker.setOpacity(0); // Hide marker created upon click
+      }
+
+      alert(message);
+    });
+  </script>
+</body>
+</html>
+```
+
