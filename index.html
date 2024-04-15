@@ -88,15 +88,7 @@
 
   var markers = L.layerGroup().addTo(map);
 
-  To make the hidden location visible when clicked on, you can modify the code to change the icon of the hidden location marker to a visible icon when the user clicks on the map and finds the hidden location. Here's how you can do it:
 
-1. First, you need to have an icon for the visible location. Let's assume you have an icon named `visible_location.png`.
-
-2. Update the code inside the `map.on('click', ...)` event listener where you handle the logic for finding the hidden location. When the user successfully finds the hidden location, change the icon of `hiddenLocationMarker` to the visible location icon and add it to the map.
-
-Here's the modified part of your code:
-
-```javascript
 map.on('click', function(e) {
     markers.clearLayers();
 
