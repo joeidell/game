@@ -111,7 +111,7 @@ map.on('click', function(e) {
     } else {
       message = "You found it! The hidden location is " + miles.toFixed(2) + " miles away.";
       hiddenLocationMarker.setIcon(L.icon({ // Change icon to a clear one upon finding location
-        iconUrl: 'visible_location.png', // Replace with your visible location icon
+        iconUrl: 'visible_location.png',
         iconSize: [32, 32],
         opacity: 1  // Set opacity to fully visible
       }));
@@ -121,10 +121,6 @@ map.on('click', function(e) {
     // Create a Leaflet popup and display the message
     var popup = L.popup().setContent(message).setLatLng(clickCoord).addTo(map);
 });
-```
-
-In this code, when the user finds the hidden location, `hiddenLocationMarker`'s icon is changed to the visible location icon, and it's added to the map. This way, the hidden location becomes visible when clicked on.
-  });
   </script>
 </body>
 </html>
